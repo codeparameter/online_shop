@@ -14,7 +14,7 @@ def role_restricted_validation(role, *restricted_roles):
     return role not in restricted_roles
 
 
-def role_based(is_valid_role, *roles, active_required=False):
+def role_based(is_valid_role, *roles, active_required=True):
 
     def decorator(fn):
         @jwt_required()
@@ -48,23 +48,23 @@ def role_based(is_valid_role, *roles, active_required=False):
     return decorator
 
 
-def role_required(*allowed_roles, active_required=False):
+def role_required(*allowed_roles, active_required=True):
     return role_based(
         role_required_validation, *allowed_roles, active_required=active_required
     )
 
 
-def role_restricted(*restricted_roles, active_required=False):
+def role_restricted(*restricted_roles, active_required=True):
     return role_based(
         role_restricted_validation, *restricted_roles, active_required=active_required
     )
 
 
-def seller_required(fn, active_required=False):
+def seller_required(fn, active_required=True):
     """Decorator to check if user is a seller"""
     return user_required(UserRole.SELLER, active_required=active_required)(fn)
 
 
-def admin_required(fn, active_required=False):
+def admin_required(fn, active_required=True):
     """Decorator to check if user is an admin"""
     return user_required(UserRole.ADMIN, active_required=active_required)(fn)
