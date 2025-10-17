@@ -10,12 +10,8 @@ class UserRole:
     ADMIN = "admin"
 
     @classmethod
-    def get_all_roles(cls):
-        return [cls.BUYER, cls.SELLER, cls.ADMIN]
-
-    @classmethod
-    def get_roles_dict(cls):
-        return {"BUYER": cls.BUYER, "SELLER": cls.SELLER, "ADMIN": cls.ADMIN}
+    def roles_list(cls, *excludes):
+        return [v for k, v in cls.__dict__.items() if k.isupper() and v not in excludes]
 
 
 class User(db.Model):

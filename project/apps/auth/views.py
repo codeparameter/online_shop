@@ -32,9 +32,8 @@ def register():
         return jsonify({"error": "Email already exists"}), 409
 
     role = data.get("role", UserRole.BUYER)
-    allowed_roles = UserRole.get_roles_dict()
-    allowed_roles.pop("ADMIN")
-    if role not in allowed_roles.values():
+
+    if role not in UserRole.roles_list(UserRole.ADMIN):
         return jsonify({"error": "Invalid role"}), 400
 
     # Create new user
