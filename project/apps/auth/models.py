@@ -25,7 +25,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     role = db.Column(db.String(20), nullable=False, default=UserRole.BUYER.value)
-    # status = db.Column(db.String(20), nullable=False)
+    status = db.Column(db.String(20), nullable=False)
+    balance = db.Column(db.Float, nullable=False, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationship with products
@@ -39,6 +40,7 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "role": self.role,
+            "status": self.status,
             "created_at": self.created_at.isoformat(),
         }
 
