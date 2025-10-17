@@ -33,7 +33,7 @@ def register():
 
     role = data.get("role", UserRole.BUYER)
 
-    if role not in UserRole.roles_list(UserRole.ADMIN):
+    if role not in UserRole.filtered_list(UserRole.ADMIN):
         return jsonify({"error": "Invalid role"}), 400
 
     # Create new user

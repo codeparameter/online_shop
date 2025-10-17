@@ -32,9 +32,9 @@ def validate_registration(data):
     elif len(data["password"]) < 6:
         errors.append("Password must be at least 6 characters long")
 
-    if "role" in data and data["role"] not in UserRole.roles_list():
+    if "role" in data and data["role"] not in UserRole.filtered_list():
         errors.append(
-            f'Invalid role. Must be one of: {", ".join(UserRole.roles_list())}'
+            f'Invalid role. Must be one of: {", ".join(UserRole.filtered_list())}'
         )
 
     return len(errors) == 0, errors

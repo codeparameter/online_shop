@@ -2,16 +2,19 @@
 
 from project.config.extensions import db
 from datetime import datetime
+from helpers.model import Status
 
 
-class UserRole:
+class UserRole(Status):
     BUYER = "buyer"
     SELLER = "seller"
     ADMIN = "admin"
 
-    @classmethod
-    def roles_list(cls, *excludes):
-        return [v for k, v in cls.__dict__.items() if k.isupper() and v not in excludes]
+
+class UserStatus(Status):
+    ACTIVE = "active"
+    VERIFYING = "verifying"
+    SUSPENDED = "suspended"
 
 
 class User(db.Model):
@@ -21,7 +24,8 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    role = db.Column(db.String(20), nullable=False, default=UserRole.BUYER)
+    role = db.Column(db.String(20), nullable=False, default=UserRole.BUYER.value)
+    # status = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationship with products
