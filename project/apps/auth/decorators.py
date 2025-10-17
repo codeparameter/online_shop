@@ -6,7 +6,7 @@ from flask_jwt_extended import get_jwt_identity
 from project.apps.auth.models import User, UserRole, UserStatus
 
 
-def role_required(*allowed_roles, active_required=False):
+def user_required(*allowed_roles, active_required=False):
     """Decorator to check if user has required role"""
 
     def decorator(fn):
@@ -42,11 +42,11 @@ def role_required(*allowed_roles, active_required=False):
 
 def seller_required(fn, active_required=False):
     """Decorator to check if user is a seller"""
-    return role_required(
+    return user_required(
         UserRole.SELLER, UserRole.ADMIN, active_required=active_required
     )(fn)
 
 
 def admin_required(fn, active_required=False):
     """Decorator to check if user is an admin"""
-    return role_required(UserRole.ADMIN, active_required=active_required)(fn)
+    return user_required(UserRole.ADMIN, active_required=active_required)(fn)
